@@ -7,6 +7,14 @@ export default {
     {
       title: 'http学习笔记',
       name: 'http'
+    },
+    {
+      title: 'TodoMvc',
+      name: 'todomvc'
+    },
+    {
+      title: 'TodoMvcelf',
+      name: 'todomvc-self'
     }
   ]
 }

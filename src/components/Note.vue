@@ -89,7 +89,7 @@
     width: 1000px;
   }
   .content {
-    height: 400px;
+    min-height: 400px;
     border: 1px solid blue;
   }
 
