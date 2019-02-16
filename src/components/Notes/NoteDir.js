@@ -15,6 +15,11 @@ export default {
     {
       title: 'TodoMvcelf',
       name: 'todomvc-self'
+    },
+    {
+      title: 'test',
+      name: 'test'
     }
+
   ]
 }
