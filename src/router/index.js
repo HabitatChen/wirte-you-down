@@ -4,9 +4,7 @@ import Index from '@/components/Index'
 import Note from '@/components/Note'
 import Script from '@/components/Notes/Script'
 import Http from '@/components/Notes/Http'
-import TodoMvc from '@/components/Notes/TodoMvc.vue'
-import TodoMvcSelf from '@/components/Notes/TodoMvcSelf.vue'
-import Test from '@/components/Notes/Test.vue'
+import TodoMvc from '@/components/Notes/TodoMvcSelf.vue'
 
 Vue.use(Router)
 
@@ -36,16 +34,6 @@ export default new Router({
           name: 'todomvc',
           path: 'todo-mvc',
           component: TodoMvc
-        },
-        {
-          name: 'todomvc-self',
-          path: 'todo-mvc-self',
-          component: TodoMvcSelf
-        },
-        {
-          name: 'test',
-          path: 'test',
-          component: Test
         }
       ]
     }

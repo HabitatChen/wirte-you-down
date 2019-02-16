@@ -29,7 +29,7 @@
                      v-model="todo.title"
                      @keyup.enter="doneEdit(todo)"
                      @blur="doneEdit(todo)"
-                     @keyup.esc="cancelEdit(index)"
+                     @keyup.esc="cancelEdit(todo)"
               >
             </li>
           </ul>

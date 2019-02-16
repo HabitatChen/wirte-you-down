@@ -11,14 +11,6 @@ export default {
     {
       title: 'TodoMvc',
       name: 'todomvc'
-    },
-    {
-      title: 'TodoMvcelf',
-      name: 'todomvc-self'
-    },
-    {
-      title: 'test',
-      name: 'test'
     }
 
   ]
