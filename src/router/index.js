@@ -5,6 +5,7 @@ import Note from '@/components/Note'
 import Script from '@/components/Notes/Script'
 import Http from '@/components/Notes/Http'
 import TodoMvc from '@/components/Notes/TodoMvcSelf.vue'
+import Animation from '@/components/Notes/Animation.vue'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
           name: 'todomvc',
           path: 'todo-mvc',
           component: TodoMvc
+        },
+        {
+          name: 'animation',
+          path: 'animation',
+          component: Animation
         }
       ]
     }

@@ -11,6 +11,10 @@ export default {
     {
       title: 'TodoMvc',
       name: 'todomvc'
+    },
+    {
+      title: 'Animation',
+      name: 'animation'
     }
 
   ]
