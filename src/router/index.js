@@ -6,6 +6,7 @@ import Script from '@/components/Notes/Script'
 import Http from '@/components/Notes/Http'
 import TodoMvc from '@/components/Notes/TodoMvcSelf.vue'
 import Animation from '@/components/Notes/Animation.vue'
+import DomEvent from '@/components/Notes/DomEvent.vue'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
           name: 'animation',
           path: 'animation',
           component: Animation
+        },
+        {
+          name: 'DomEvent',
+          path: 'domevent',
+          component: DomEvent
         }
       ]
     }

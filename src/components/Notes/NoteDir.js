@@ -15,6 +15,10 @@ export default {
     {
       title: 'Animation',
       name: 'animation'
+    },
+    {
+      title: 'DomEvent',
+      name: 'DomEvent'
     }
 
   ]
