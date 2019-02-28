@@ -44,12 +44,82 @@
     <p>先捕获再冒泡，如果在捕获阶段插入一个函数(即事件监听函数中的第三个参数为true)，就会先执行该函数</p>
     <h5>注意</h5>
     <p>如果一个元素最底层的元素，同时添加冒泡和捕获的事件监听，则那个先定义就先执行</p>
+    <p>第一种写法：</p>
+      <p>1. 目标点击时，弹出浮层</p>
+      <p>2. 阻止浮层冒泡</p>
+      <p>3. 监听document的点击事件，修改浮层的display<pre><code>$(btn).on(&#39;click&#39;, function() {
+ $(popover).style.dispaly = block
+})
+$(wrap).on(&#39;click&#39;, function(e) {
+ e.stopPropagation()
+})
+$(document).on(&#39;click&#39;, function() {
+ $(popover).style.display = &#39;block&#39;
+})
+</code></pre>存在的问题是如果有多个浮层的弹出，document监听的事件过多<br>
+        解决方案： 只有在点击之后监听一次，不点击的时候不监听<pre><code>$(btn).on(&#39;click&#39;, function() {
+ $(popover).style.dispaly = block
+ $(document).one(&#39;click&#39;, function() {
+   $(popover).style.display = &#39;block&#39;
+ })
+})
+$(wrap).on(&#39;click&#39;, function(e) {
+ e.stopPropagation()
+})
+</code></pre>为什么还要加一个setTimeout更好?<br>
+        因为异步执行的函数会在事件的冒泡全部触发完成后再将事件放入队列。<pre><code>$(btn).on(&#39;click&#39;, function() {
+ $(popover).style.dispaly = block
+ setTimeout(function() {
+   $(document).one(&#39;click&#39;, function() {
+     $(popover).style.display = &#39;block&#39;
+ }, 0)
+})
+})
+</code></pre></p>
+
+    <p>Q: 在Vue中如何使用JQuery事件将下列的每个圈一次变色，即Vue中使用原生事件</p>
+    <div class="ruinbow">
+      <div class="red">
+        <div class="orange">
+          <div class="blue">
+            <div class="green">
+              <div class="black">
+                <div class="purple">
+                  <div class="pink">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+  import $ from 'jquery'
+  console.log($('.caihong div'))
+  let n = 0
+  $('.ruinbow div').on('click', function(e) {
+    console.log(1)
+    setTimeout(function() {
+      $(e.currentTarget).addClass('active')
+    }, n * 500)
+    n += 1
+  })
+
   export default {
-    name: "DonEvent.vue"
+    name: "DonEvent.vue",
+    created() {
+      $('.ruinbow div').on('click', function(e) {
+        console.log(1)
+        setTimeout(function() {
+          $(e.currentTarget).addClass('active')
+        }, n * 500)
+        n += 1
+      })
+    }
   }
 </script>
 
@@ -58,4 +128,37 @@
   .wrapper {
     width: 100%;
   }
+  .red.active {
+    background: red;
+  }
+  .orange.active {
+    background: orange;
+  }
+  .blue.active {
+    background: blue;
+  }
+  .green.active {
+    background: green;
+  }
+  .black.active {
+    background: black;
+  }
+  .purple.active {
+    background: purple;
+  }
+  .pink.active {
+    background: pink;
+  }
+
+  .ruinbow {
+    width: 200px;
+    height: 200px;
+  }
+
+  .ruinbow  div {
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 50%;
+  }
+
 </style>
