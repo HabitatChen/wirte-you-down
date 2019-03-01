@@ -124,7 +124,7 @@ $(wrap).on(&#39;click&#39;, function(e) {
 </script>
 
 <style scoped>
-  @import "http://statics.1024tools.com/css/markdown/github.css";
+  @import "../../assets/css/markdown.css";
   .wrapper {
     width: 100%;
   }

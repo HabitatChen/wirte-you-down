@@ -19,6 +19,10 @@ export default {
     {
       title: 'DomEvent',
       name: 'DomEvent'
+    },
+    {
+      title: 'JSONP',
+      name: 'JSONP'
     }
 
   ]

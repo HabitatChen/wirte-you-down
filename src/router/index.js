@@ -7,6 +7,7 @@ import Http from '@/components/Notes/Http'
 import TodoMvc from '@/components/Notes/TodoMvcSelf.vue'
 import Animation from '@/components/Notes/Animation.vue'
 import DomEvent from '@/components/Notes/DomEvent.vue'
+import Jsonp from '@/components/Notes/Jsonp.vue'
 
 Vue.use(Router)
 
@@ -46,6 +47,11 @@ export default new Router({
           name: 'DomEvent',
           path: 'domevent',
           component: DomEvent
+        },
+        {
+          name: 'JSONP',
+          path: 'jsonp',
+          component: Jsonp
         }
       ]
     }
