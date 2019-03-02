@@ -23,6 +23,10 @@ export default {
     {
       title: 'JSONP',
       name: 'JSONP'
+    },
+    {
+      title: 'AJAX',
+      name: 'AJAX'
     }
 
   ]
