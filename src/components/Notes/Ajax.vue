@@ -65,12 +65,119 @@ response.write(`
   }
 `)
 </code></pre>
+    <h4 id="-window-jquery-ajax">实现一个 window.jQuery.ajax</h4>
+    <pre><code>window.$ = window.jQuery
+window.jQuery.ajax = function(url, method, body, successFn, failFn) {
+  let request = new XMLHttpRequest()
+  request.open(method, ual)
+  request.onreadystatechange = function() {
+      if (request.readyState === 4) {
+          if (request.stetus === 200) {
+              successFn.call(undefined, request.responseText)
+          } else {
+              failFn.call(undefined, request)
+          }
+      }
+  }
+  request.send(body)
+}
+</code></pre><p>上述写法的缺陷： 1. 变量过多； 2. get 是没有第三部分的参数的，导致body变量只能有undefined占位</p>
+    <p>改进： 传递一个有结构的变量来替代过多的变量</p>
+    <pre><code>window.jQuery.ajax = function(options) {
+  let url = options.url
+  let method = options.method
+  let body = options.body
+  let successFn = options.successFn
+  let failFn = opitons.failFn
+</code></pre><p>调用时写成下列形式：</p>
+    <pre><code>myButton.addEventListener(&#39;click&#39;, (e) =&gt; {
+    window.jQuery.ajax({
+        url: &#39;/xxxl&#39;,
+        method: &#39;get&#39;,
+        seccessFn: () =&gt; {},
+        failFn: () =&gt; {}
+    })
+})
+</code></pre><h4 id="-es6-">使用ES6解构赋值</h4>
+    <p><code>let {url, method, body, successFn, failFn} = options</code></p>
+    <p>然后对函数再优化一下</p>
+    <p><code>window.jQuery.ajax = funciton({url, method, body, successFn, failFn}) {}</code></p>
+    <h4 id="-new-promise-">使用new promise()优化最后传入的成功和失败函数</h4>
+    <p>promise 只是一个确定函数名的规范</p>
+    <pre><code>myButton.addEventListener(&#39;click&#39;, function() {
+    $.ajax({
+        url: &#39;/xxx&#39;,
+        method: &#39;post&#39;,
+        data: {
+            id: 1,
+            name: &#39;aaa&#39;
+        }
+    }).then(resolve, reject)
+    .then()
+})
+
+function resolve() {
+    ...
+}
+function reject() {
+    ...
+}
+最后可以使用箭头函数取代上述两个函数定义，并且可以连环使用then
+</code></pre><h4 id="-ajax">自己封装实现ajax</h4>
+    <p>1.es6 解构赋值<br>
+      2.返回一个Promise对象<br>
+      3.创建一个XMLHttpRequest对象，配置并发射<br>
+      在调用时，添加then并传入成功和失败函数
+    </p>
+    <pre><code>window.jQuery.ajax = function({url, method, body, successFn, failFn, header}) {
+    return new Promise(function(resolve, reject) {
+        let request = new XMLHttpRequest()
+        request.open(url, method)
+        request.onreadystatechange = function() {
+            if (request.readyState === 4) {
+                if (reqeust.status === 200) {
+                    resolve.call(undefined, request.responseText)
+                } else {
+                    reject.call(undefined, request)
+                }
+            }
+        }
+        rquest.send(body)
+    })
+}
+
+$.ajax({
+    url: &#39;/xxx&#39;,
+    method: &#39;post&#39;,
+    data: {}
+}),then(() =&gt; {
+    // resolve
+}, () =&gt; {
+    // reject
+})
+</code></pre>
   </div>
 </template>
 
 <script>
   export default {
     name: "Ajax.vue"
+  }
+  window.jQuery.ajax = function({url, method, body}) {
+    return new Promise(function(resolve, reject) {
+      let request = new XMLHttpRequest()
+      request.open(method, url)
+      request.onreadystatechange = function() {
+        if (request.readyState === 4) {
+          if (request.status === 200) {
+            resolve.call(undefined, request.responseText)
+          } else {
+            reject.call(undefined, request)
+          }
+        }
+      }
+      request.send(body)
+    })
   }
 </script>
 
