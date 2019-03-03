@@ -163,22 +163,6 @@ $.ajax({
   export default {
     name: "Ajax.vue"
   }
-  window.jQuery.ajax = function({url, method, body}) {
-    return new Promise(function(resolve, reject) {
-      let request = new XMLHttpRequest()
-      request.open(method, url)
-      request.onreadystatechange = function() {
-        if (request.readyState === 4) {
-          if (request.status === 200) {
-            resolve.call(undefined, request.responseText)
-          } else {
-            reject.call(undefined, request)
-          }
-        }
-      }
-      request.send(body)
-    })
-  }
 </script>
 
 <style scoped>
