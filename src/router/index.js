@@ -9,6 +9,7 @@ import Animation from '@/components/Notes/Animation.vue'
 import DomEvent from '@/components/Notes/DomEvent.vue'
 import Jsonp from '@/components/Notes/Jsonp.vue'
 import Ajax from '@/components/Notes/Ajax.vue'
+import Mvc from '@/components/Notes/Mvc.vue'
 
 Vue.use(Router)
 
@@ -58,6 +59,11 @@ export default new Router({
           name: 'AJAX',
           path: 'ajax',
           component: Ajax
+        },
+        {
+          name: 'MVC',
+          path: 'mvc',
+          component: Mvc
         }
       ]
     }

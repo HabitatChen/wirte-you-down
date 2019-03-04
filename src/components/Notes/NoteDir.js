@@ -27,6 +27,10 @@ export default {
     {
       title: 'AJAX',
       name: 'AJAX'
+    },
+    {
+      title: 'MVC',
+      name: 'MVC'
     }
 
   ]
