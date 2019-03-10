@@ -31,6 +31,10 @@ export default {
     {
       title: 'MVC',
       name: 'MVC'
+    },
+    {
+      title: 'Cookie and Session',
+      name: 'CookieAndSession'
     }
 
   ]

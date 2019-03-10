@@ -10,6 +10,7 @@ import DomEvent from '@/components/Notes/DomEvent.vue'
 import Jsonp from '@/components/Notes/Jsonp.vue'
 import Ajax from '@/components/Notes/Ajax.vue'
 import Mvc from '@/components/Notes/Mvc.vue'
+import CookieAndSession from '@/components/Notes/CookieAndSession.vue'
 
 Vue.use(Router)
 
@@ -64,6 +65,11 @@ export default new Router({
           name: 'MVC',
           path: 'mvc',
           component: Mvc
+        },
+        {
+          name: 'CookieAndSession',
+          path: 'cookieandsession',
+          component: CookieAndSession
         }
       ]
     }

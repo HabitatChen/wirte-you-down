@@ -35,11 +35,19 @@
       }
     },
     created() {
-      console.log(this.sideBarDir)
+      let initialIndex = localStorage.getItem('sideBarIndex')
+      this.sideBarIndex = !initialIndex ? -1 : initialIndex
+    },
+    mounted() {
+      let liList = document.querySelectorAll('ol > li')
+      liList[this.sideBarIndex].classList.add('active')
     },
     methods: {
       sideChange(name, index) {
+        let liList = document.querySelectorAll('ol > li')
+        liList[this.sideBarIndex].classList.remove('active')
         this.sideBarIndex = index
+        localStorage.setItem('sideBarIndex', this.sideBarIndex)
         this.$router.push({name: name})
       }
     }
