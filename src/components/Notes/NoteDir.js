@@ -35,6 +35,10 @@ export default {
     {
       title: 'Cookie and Session',
       name: 'CookieAndSession'
+    },
+    {
+      title: 'Webpack',
+      name: 'Webpack'
     }
 
   ]

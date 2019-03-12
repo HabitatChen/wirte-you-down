@@ -11,6 +11,8 @@ import Jsonp from '@/components/Notes/Jsonp.vue'
 import Ajax from '@/components/Notes/Ajax.vue'
 import Mvc from '@/components/Notes/Mvc.vue'
 import CookieAndSession from '@/components/Notes/CookieAndSession.vue'
+import Webpack from '@/components/Notes/Webpack.vue'
+
 
 Vue.use(Router)
 
@@ -70,6 +72,11 @@ export default new Router({
           name: 'CookieAndSession',
           path: 'cookieandsession',
           component: CookieAndSession
+        },
+        {
+          name: 'Webpack',
+          path: 'webpack',
+          component: Webpack
         }
       ]
     }
