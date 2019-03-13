@@ -127,6 +127,233 @@
             &quot;dev&quot;: &quot;webpack --mode development;webpack-dev-server --mode development&quot;
         }
 </code></pre><p>5.loader 详解</p>
+    <pre><code>1.了解什么是loader
+
+因为webpack是一个JavaScript打包器，所以对于处理非Js文件时，需要一个转换器，
+Loader 可以理解为是模块和资源的转换器，它本身是一个函数，接受源文件作为参数，返回转换的结果。
+这样，我们就可以通过 require 来加载任何类型的模块或文件，比如 CoffeeScript、 JSX、 LESS 或图片
+
+2.如何使用loader
+
+    https://www.webpackjs.com/concepts/loaders/#%E7%A4%BA%E4%BE%8B
+    (1)内联
+    (2)CLI
+    (3)config配置
+
+    (1)安装 style-loader和css-loader
+
+        npm i style-loader css-loader --save-dev
+
+    (2)配置config文件
+
+        moduele: {
+            rules: [
+                {
+                    test: /\.txt$/, //test属性用于标识出应该被对应loader进行转换的文件
+                    use:[‘style-loader’, ’css-loader’] // use表明用哪个 必须把style-loader放在 css-loader之前
+
+                    // use的不同写法
+                    use: [
+                        {
+                            loader: &#39;style-loader&#39;
+                        },
+                        {
+                            loader:&#39;css-loader&#39;,
+                            options: {
+                                modules: true
+                            }
+                        }]
+                }
+            ]
+        }
+3.编译less和sass文件
+
+    less:
+        安装:
+            npm i less less-loader --save-dev
+        配置webpack.config.js:
+            module: {
+                rules: [
+                    {
+                        test: /\.less$/,
+                        use: [&#39;style-loader&#39;, &#39;css-loader&#39;, &#39;less-loader&#39;]
+                    }
+                ]
+            }
+
+    sass:
+        安装:
+            npm i node-sass sass-loader --save-dev
+        配置webpack.config.js:
+            module: {
+                rules: [
+                    {
+                        test: /\.sass$/,
+                        use: [&#39;style-loader&#39;, &#39;css-loader&#39;, &#39;sass-loader&#39;]
+                    }
+                ]
+            }
+4.使用postCss处理文件前缀
+    1.了解一下什么是postCss
+        最主要的是一个能够拓展css代码兼容性的平台，最主要的是加上样式前缀能够让所有的浏览器都能正确使用。
+    2.怎么使用
+        安装:
+            npm i postcss-loader autoprefixer --save-dev
+        配置:
+            module: {
+                rules: [&#39;style-loader&#39;, &#39;css-loader&#39;, &#39;less-loader&#39;, {
+                    loader: &#39;postcss-loader&#39;,
+                    options: {
+                        plugins: [
+                        require(&quot;autofixer&quot;)({
+                            browse: [
+                                &#39;ie &gt;= 8&#39;,
+                                &#39;chorme &gt;= 9&#39;
+                                ... 浏览器的配置
+                            ]
+                    })]
+                    }
+                    // 或者在package.json里面设置browselist
+                }]
+            }
+5.文件处理(1.图片文件 2.字体文件 3.第三方库)
+    1.图片处理
+        当img或者css中的url去请求一个图片都时候需要对他进行处理
+
+        安装loader:
+            npm i —save-dev file-loader
+        配置webpack.config.js
+            module: {
+                rules: [
+                    {
+                        test: /\.(jpg|png|gif|jpeg)$/,
+                        use: [{
+                            loader: &#39;file-loader&#39;,
+                            options: {
+                                name: 为你的文件配置自定义文件名模版（默认值是[hash].[ext]）,
+                                context: 配置自定义文件的上下文，默认为webpack.config,js
+                                publicPath: 为你的文件配置自定义的public发布目录
+                                outputPath: 为你的文件配置自定义的output输出目录
+                            }
+                        }]
+                    }
+                ]
+            }
+    2.字体处理同上
+    3.第三方库处理
+        第一种npm安装模块
+            import jQuery from &#39;jQuery&#39;
+        第二种通过本地导入
+                webpack.ProvidePlugin参数是键值对形式，键就是我们项目中使用的变量名，值就是键所指向的库。
+            webpack.prividePlugin会先从npm安装的包中查找是否有符合的库。如果webpack配置了resolve.alias选项，
+            可以理解成别名，那么webpack.ProvidePluginiu 会顺着设置的路径一直找下去。
+
+            使用webpack.ProvidePlugin前需要引入webpack
+
+            const webpack = require(&#39;webpack&#39;)
+
+            resolve: {
+                alias: {
+                    // 引入jquery,如果不设置就会从node_modules去找
+                    jQuery: path.resolve(__dirname, node_modules/jquery/jquery.js)
+                    jQuery: path.resolve(__dirname, “src/jquery.js”)
+                }
+            }
+
+            plugins: [
+                new webpack.ProvidePlugin({
+                    // 变量名就是对应过键名，可以随便起变量名，值就是指向的库，然后
+                    // 通过resolve.alias去寻找这个库所在的文件,
+                    jQuery: “jQuery”
+                })
+            ]
+</code></pre><p>6.使用babel编译ES6</p>
+    <pre><code>1.了解babel
+        目前，ES6（ES2015）这样的语法已经得到了很大规模的应用，它具有更加简洁功能更加强大的特点，世纪项目中很有可能会
+    使用采用了ES6语法的模块，但浏览区对于ES6的语法是不支持的，为了实现兼容性，就需要使用转换工具对ES6语法转换为ES5语法，
+    babel就是最常用的一个工具
+    ==&gt; 因为要处理向后兼容性，所以需要工具对新出的ES6,7等语法进行转换成ES5语法。
+
+    babel转换语法所需要的依赖项：
+        babel-loader: 负责ES6语法转换
+        babel-core: babel核心包
+        babel-preset-env: 告诉babel使用哪种转码规则进行文件处理
+
+2.如何使用
+    安装依赖
+
+        npm install babel-loader @babel/core @babel/preset-ent —save-dev
+
+    配置webpack.config.js
+        module: {
+            rules: [
+                {
+                    test: /\.js$/,
+                    use: &#39;babel-loader&#39;,
+                    exclude: /node_modules/, // 不在哪个文件下查找
+                }
+            ]
+        }
+    然后再新建一个.babelrc文件，用来配置转换规则
+        touch .babelrc; vi .babelrc
+        {
+            “presets”: [“@babel/preset-env”]
+        }
+
+    另一种写法，不需要新建.babelrc文件
+        module: {
+            rules: [
+                {
+                    test: /\.js$/,
+                    use: {
+                        loader: &#39;babel-loader&#39;,
+                        options: {
+                            presets:[“@babel/presets-env”]
+                        }
+                    },
+                    exclude: /node_modules/,
+                }
+            ]
+        }
+</code></pre><p>7.根据模版插件自动生成HTML 插件</p>
+    <pre><code>1.了解html-webpack-plugin
+    HtmlWebpackPlugin会自动为你生成一个HTML文件，根据指定的index.html模版生成对应的html文件
+        即根据src下的index.html文件自动在打包后的目录下生成html文件，相关引用关系和文件依赖会
+    自动按照正确的配置添加到生成的html里
+
+2.安装依赖
+    npm i —save-dev html-webpack-plugin
+
+3.配置
+    // 先引入这个插件
+    const HtmlWebpackPlugin = require(“html-webpack-plugin”)
+
+    然后在weboack中写入插件
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: “./src/index.html”, // 模版html
+            filename: “webpack.html”, // 输出文件
+            // 设置其他配置
+            minify: {
+                minimize: true, // 是否打包为最小值
+                removeAttributeQuotes: true, // 清除引号
+                removeComments: true, // 去除注释
+                collapseWhitesoace: true, // 去除空格
+                minifyCss: true, //压缩html内的样式
+                minifyJS: true, //压缩html中的Js
+                removeEmptyElements: true, // 清理内容为空的元素
+            }，
+            hash:true, // 引入产出资源的时候加上哈希避免缓存
+        })
+    ]
+
+    最后到模版html即使不设置&lt;script&gt;标签也会自动引入
+</code></pre><p>以下插件远离基本同上</p>
+    <p>8.提取分离css</p>
+    <p>9.压缩css和优化css结构</p>
+    <p>10.拷贝静态文件</p>
+    <p>11.用clean-webpack-plugin清除文件</p>
+
 
   </div>
 </template>
