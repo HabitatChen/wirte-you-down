@@ -1,25 +1,32 @@
 <template>
   <div class="wrap">
     <div class="topBar">
+      <div class="logo">
+        <img src="../assets/pictures/lufei.png" alt="">
+      </div>
       <ul>
         <li class="topBarItem">
           <div class="topBar-home">
-            home
+            HOME
+          </div>
+        </li>
+        <li class="topBarItem" @click="pageChangeTo('note')">
+          <div class="topBar-home">
+            NOTES
+          </div>
+        </li>
+        <li class="topBarItem" @click="pageChangeTo('resume')">
+          <div class="topBar-home">
+            RESUME
           </div>
         </li>
         <li class="topBarItem">
           <div class="topBar-home">
-            notes
-          </div>
-        </li>
-        <li class="topBarItem">
-          <div class="topBar-home">
-            about
+            PROJECTS
           </div>
         </li>
       </ul>
     </div>
-    <button @click="toStart">跳到起步页</button>
   </div>
 </template>
 
@@ -31,8 +38,8 @@ export default {
     }
   },
   methods: {
-    toStart() {
-      this.$router.push({name: 'note'})
+    pageChangeTo(name) {
+      this.$router.push({name: name})
     }
   }
 }
@@ -47,30 +54,46 @@ export default {
     background-size: 100% 100%;
   }
   .topBar {
-    width: 70%;
-    height: 100px;
+    width: 100%;
+    height: 140px;
     background: #f6f7be;
     position: fixed;
     margin: 0 auto;
+    background: linear-gradient(#f6f7be, white);
+    display:flex;
+    justify-content: space-between;
+  }
+  .topBar > .logo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  .topBar > .logo > img {
+    width: 100%;
+    height: 100%;
   }
   .topBar > ul {
     display: flex;
+    margin-top: 35px;
+    margin-right: 100px;
   }
   .topBar .topBarItem {
     height: 30px;
-    border: 1px solid red;
+    color: #1b897a;
     font-size: 18px;
     line-height: 30px;
-    background: #f6f7be;
+    font-family: "微软雅黑", Arial, sans-serif;
   }
   .topBarItem > div {
     border-bottom: 3px solid transparent;
   }
   .topBarItem > div:hover {
     cursor: pointer;
-    border-bottom: 3px solid red;
+    color: #dc5b47;
+    border-bottom: 3px solid #00a0f8;
   }
   .topBar > ul > li {
     margin: 0 30px;
   }
-</style>
+  </style>
