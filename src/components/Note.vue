@@ -35,11 +35,19 @@
       }
     },
     created() {
+      console.log(1);
       let initialIndex = localStorage.getItem('sideBarIndex')
-      this.sideBarIndex = !initialIndex ? -1 : initialIndex
+      this.sideBarIndex = !initialIndex ? 0 : initialIndex
+      console.log('this is index');
+      console.log(this.sideBarIndex);
     },
     mounted() {
+      console.log(2);
       let liList = document.querySelectorAll('ol > li')
+      console.log('this is list');
+      console.log(liList);
+      console.log('this is classList');
+      console.log(liList[this.sideBarIndex].classList);
       liList[this.sideBarIndex].classList.add('active')
     },
     methods: {
@@ -61,13 +69,11 @@
     justify-content: center;
   }
   .navBar {
-    border: 1px solid red;
     width: 1400px;
     height: 200px;
     background: #00a0f8;
   }
   .layout {
-    border: 1px solid green;
     display: flex;
     width: 1400px;
   }
@@ -92,13 +98,11 @@
     cursor:pointer;
   }
   .mainAndFooter {
-    border: 1px solid black;
     height: 600px;
     width: 1000px;
   }
   .content {
     min-height: 400px;
-    border: 1px solid blue;
   }
 
 </style>
